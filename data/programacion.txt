@@ -1,0 +1,20 @@
+5
+0
+2
+calle3 10
+calle5 8
+1
+2
+calle1 12
+calle9 4
+2
+2
+calle10 7
+calle4 12
+3
+2
+calle6 15
+calle2 20
+4
+1
+calle7 1
