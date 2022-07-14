@@ -8,8 +8,8 @@ if __name__ == '__main__':
     _lector = Lector()
     _escritor = Escritor()
 
-    grafo = _lector.leer_como_grafo(r'../data/red.txt')
-    print(f"Grafo {grafo}")
+    # grafo = _lector.leer_como_grafo(r'../data/red3.txt')
+    # print(f"Grafo {grafo}")
 
     # Este es el listado de calles. Orden de las posiciones: desde donde sale, para donde va, nombre de la calle, distancia
     calles = _lector.leer_como_lista_de_calles(r'../data/red.txt')
@@ -53,5 +53,5 @@ if __name__ == '__main__':
 
     _simulador.simular(programacion)
 
-    # print(f'Archivo guardado en {_writer.create_program_report(programacion)}')
+    # print(f'Archivo guardado en {_writer.crear_reporte(programacion)}')
 
