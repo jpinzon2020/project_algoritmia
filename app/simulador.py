@@ -1,4 +1,5 @@
 import json
+import math
 
 
 class Simulador:
@@ -14,14 +15,50 @@ class Simulador:
         self.segundos = segundos
         self.calles = calles
         self.trayectos = trayectos
+        self.preparar_calles()
+
+    def preparar_calles(self):
+        for calle in self.calles:
+            calle.append(0) # Agregada luz verde
+            calle.append(0) # Agregada luz roja
 
     def simular(self, traffic_lights):
         self.calcular_distancias()
         self.agregar_luces_verdes(traffic_lights)
+        self.calcular_luces_rojas()
+        self.imprimir_estado_inicial()
 
-        print(f'Calles: \n{json.dumps(self.calles, indent=2)}')
+    def agregar_luces_verdes(self, semaforo):
+        for calle in self.calles:
+            esta_programado = False
+            for calle_programada in semaforo:
 
-        return None
+                if calle[self.indice_nombre_calle] == calle_programada[0]:
+                    calle[self.indice_luz_verde] = calle_programada[1]
+                    esta_programado = True
+                    break
+
+            # Si no fue programado, el semaforo nunca esta en verde, pero siempre en rojo
+            if not esta_programado:
+                calle[self.indice_luz_verde] = 0
+                calle[self.indice_luz_roja] = math.inf
+
+    def calcular_luces_rojas(self):
+        i = 0
+        while i < len(self.calles):
+            j = 0
+            aux = self.calles[i]
+            interseccion = aux[self.indice_hacia]
+
+            while j < len(self.calles):
+                calle = self.calles[j]
+                if i != j:
+                    if calle[self.indice_hacia] == interseccion:
+                        tiempo = aux[self.indice_luz_verde]
+                        calle[self.indice_luz_roja] = calle[self.indice_luz_roja] + tiempo
+
+                j = j + 1
+            i = i + 1
 
     def calcular_distancias(self):
         for trayecto in self.trayectos:
@@ -38,27 +75,10 @@ class Simulador:
 
         return self.trayectos
 
-    def agregar_luces_verdes(self, traffic_lights):
-        for street in self.calles:
-            programmed = False
-            for street_programmed in traffic_lights:
-
-                if street[self.indice_nombre_calle] == street_programmed[0]:
-                    street.append(street_programmed[1])
-                    programmed = True
-                    break
-
-            # Si no fue programado, el semaforo nunca esta en verde. Por tanto, su tiempo asignado es cero
-            if not programmed:
-                street.append(0)
-
-'''
-    def calculate_red_lights(self):
-        for street in self.streets:
-            intersection = street[self.index_to]
-            total_time = 0
-
-            for street in
-'''
-
-
+    def imprimir_estado_inicial(self):
+        print('\nESTADO INICIAL SEGUN PROGRAMACION\n')
+        for calle in self.calles:
+            print(f'{calle[self.indice_nombre_calle]} desde {calle[self.indice_desde]} hacia {calle[self.indice_hacia]}\n'
+                  f'Distancia: {calle[self.indice_distancia]}\n'
+                  f'Tiempo en verde: {calle[self.indice_luz_verde]}\n'
+                  f'Tiempo en rojo: {calle[self.indice_luz_roja]}\n')

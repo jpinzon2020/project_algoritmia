@@ -2,27 +2,27 @@ from pathlib import Path
 
 
 class Escritor:
-    directory = Path(__file__).parent
+    directorio = Path(__file__).parent
 
-    def create_program_report(self, content):
-        file = '../data/programacion1.txt'
-        filepath = (self.directory / file).resolve()
+    def create_program_report(self, contenido):
+        archivo = '../data/programacion1.txt'
+        ruta_archivo = (self.directorio / archivo).resolve()
 
-        vertices = len(content)
+        vertices = len(contenido)
 
-        with open(f'{filepath}', 'w') as f:
+        with open(f'{ruta_archivo}', 'w') as f:
             f.write(f'{vertices}\n')
 
             i = 0
-            for vertice in content:
+            for vertice in contenido:
                 f.write(f'{i}\n')
                 f.write(f'{len(vertice)}\n')
 
-                for edge in vertice:
-                    f.write(f'{edge[0]} {edge[1]}\n')
+                for arista in vertice:
+                    f.write(f'{arista[0]} {arista[1]}\n')
 
                 i = i + 1
 
         f.close()
 
-        return file
+        return archivo

@@ -16,7 +16,7 @@ if __name__ == '__main__':
     print(f"Calles {calles}")
 
     segundos, puntaje = _lector.leer_configuracion(r'../data/simulacion.txt')
-    print(f"Segundos {segundos} y score {puntaje}")
+    print(f"Segundos {segundos} y puntaje {puntaje}")
 
     trayectos = _lector.leer_trayectos(r'../data/trayectos.txt')
 
