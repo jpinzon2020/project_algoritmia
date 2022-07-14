@@ -4,7 +4,7 @@ from pathlib import Path
 class Escritor:
     directorio = Path(__file__).parent
 
-    def create_program_report(self, contenido):
+    def crear_reporte(self, contenido):
         archivo = '../data/programacion1.txt'
         ruta_archivo = (self.directorio / archivo).resolve()
 

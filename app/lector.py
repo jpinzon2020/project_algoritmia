@@ -20,14 +20,16 @@ class Lector:
                     for j in range(cant_intersecciones):
                         grafo.append([])
                 else:
-                    # Agregamos una calle que va desde una interseccion hacia otra interseccion, que tiene un nombre
-                    # y un tiempo para recorrerla
+                    # Agregamos una calle que va desde una interseccion hacia otra, que tiene un nombre y un tiempo
+                    # para recorrerla. Ademas inicializamos los tiempos asignados a las luces de los semaforos
                     desde = int(valores[0])
                     hacia = int(valores[1])
                     nombre_calle = valores[2]
                     tiempo_para_recorrer = int(valores[3])
+                    luz_en_verde = 0
+                    luz_en_rojo = 0
 
-                    calle = [hacia, tiempo_para_recorrer, nombre_calle]
+                    calle = [hacia, tiempo_para_recorrer, nombre_calle, luz_en_verde, luz_en_rojo]
 
                     calles = grafo[desde]
                     calles.append(calle)
@@ -51,14 +53,16 @@ class Lector:
                 if i == 0:
                     calles = [None] * int(valores[1])
                 else:
-                    # Agregamos una calle que va desde una interseccion hacia otra, que tiene un nombre
-                    # y un tiempo para recorrerla
+                    # Agregamos una calle que va desde una interseccion hacia otra, que tiene un nombre y un tiempo
+                    # para recorrerla. Ademas inicializamos los tiempos asignados a las luces de los semaforos
                     desde = int(valores[0])
                     hacia = int(valores[1])
                     nombre_calle = valores[2]
                     tiempo_para_recorrer = int(valores[3])
+                    luz_en_verde = 0
+                    luz_en_rojo = 0
 
-                    calle = [desde, hacia, nombre_calle, tiempo_para_recorrer]
+                    calle = [desde, hacia, nombre_calle, tiempo_para_recorrer, luz_en_verde, luz_en_rojo]
 
                     calles[i - 1] = calle
 

@@ -1,4 +1,3 @@
-import json
 import math
 
 
@@ -15,12 +14,6 @@ class Simulador:
         self.segundos = segundos
         self.calles = calles
         self.trayectos = trayectos
-        self.preparar_calles()
-
-    def preparar_calles(self):
-        for calle in self.calles:
-            calle.append(0) # Agregada luz verde
-            calle.append(0) # Agregada luz roja
 
     def simular(self, traffic_lights):
         self.calcular_distancias()
@@ -38,7 +31,7 @@ class Simulador:
                     esta_programado = True
                     break
 
-            # Si no fue programado, el semaforo nunca esta en verde, pero siempre en rojo
+            # Si no fue programado, el semaforo nunca esta en verde y siempre esta en rojo
             if not esta_programado:
                 calle[self.indice_luz_verde] = 0
                 calle[self.indice_luz_roja] = math.inf
@@ -79,6 +72,6 @@ class Simulador:
         print('\nESTADO INICIAL SEGUN PROGRAMACION\n')
         for calle in self.calles:
             print(f'{calle[self.indice_nombre_calle]} desde {calle[self.indice_desde]} hacia {calle[self.indice_hacia]}\n'
-                  f'Distancia: {calle[self.indice_distancia]}\n'
-                  f'Tiempo en verde: {calle[self.indice_luz_verde]}\n'
-                  f'Tiempo en rojo: {calle[self.indice_luz_roja]}\n')
+                  f'Distancia: {calle[self.indice_distancia]}, '
+                  f'tiempo en verde: {calle[self.indice_luz_verde]}, '
+                  f'tiempo en rojo: {calle[self.indice_luz_roja]}\n')
