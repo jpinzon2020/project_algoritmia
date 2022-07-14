@@ -2,7 +2,7 @@ import json
 from lector import Lector
 from escritor import Escritor
 from simulador import Simulador
-
+from programacion import Programacion
 
 if __name__ == '__main__':
     _lector = Lector()
@@ -22,6 +22,9 @@ if __name__ == '__main__':
 
     _simulador = Simulador(puntaje, segundos, calles, trayectos)
     trayectos = _simulador.calcular_distancias() # Aca se calculan las distancias en cada trayecto, y se ponen en la primera posicion del arreglo
+
+    _programacion = Programacion(trayectos, calles)
+    print(f"Encolamiento de vehiculos {_programacion.cola_vehiculos}")
 
     print(f"Trayectos {trayectos}")
 
