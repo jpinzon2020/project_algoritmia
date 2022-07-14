@@ -1,28 +1,28 @@
 import json
-from reader import Reader
-from writer import Writer
-from simulator import Simulator
+from lector import Lector
+from escritor import Escritor
+from simulador import Simulador
 
 
 if __name__ == '__main__':
-    _reader = Reader()
-    _writer = Writer()
+    _lector = Lector()
+    _escritor = Escritor()
 
-    graph = _reader.read_as_graph(r'../data/red.txt')
-    print(f"Grafo {graph}")
+    grafo = _lector.leer_como_grafo(r'../data/red.txt')
+    print(f"Grafo {grafo}")
 
-    streets = _reader.read_as_street_list(r'../data/red.txt')
-    print(f"Calles {streets}")
+    # Este es el listado de calles. Orden de las posiciones: desde donde sale, para donde va, nombre de la calle, distancia
+    calles = _lector.leer_como_lista_de_calles(r'../data/red.txt')
 
-    seconds, score = _reader.read_simulation_config(r'../data/simulacion.txt')
-    print(f"Segundos {seconds} y score {score}")
+    segundos, puntaje = _lector.leer_configuracion(r'../data/simulacion.txt')
+    print(f"Segundos {segundos} y score {puntaje}")
 
-    journeys = _reader.read_journeys(r'../data/trayectos.txt')
+    trayectos = _lector.read_journeys(r'../data/trayectos.txt')
 
-    _simulator = Simulator(score, seconds, streets, journeys)
-    journeys = _simulator.calculate_distances() # Aca se calculan las distancias en cada trayecto, y se ponen en la ultima posicion del arreglo
+    _simulador = Simulador(puntaje, segundos, calles, trayectos)
+    trayectos = _simulador.calcular_distancias() # Aca se calculan las distancias en cada trayecto, y se ponen en la ultima posicion del arreglo
 
-    print(f"Trayectos {journeys}")
+    print(f"Trayectos {trayectos}")
 
     programacion = [
         ['calle3', 10],
@@ -47,7 +47,7 @@ if __name__ == '__main__':
 
     print(f'Programacion {programacion}')
 
-    _simulator.simulate(programacion)
+    _simulador.simular(programacion)
 
     # print(f'Archivo guardado en {_writer.create_program_report(programacion)}')
 

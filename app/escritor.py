@@ -1,7 +1,7 @@
 from pathlib import Path
 
 
-class Writer:
+class Escritor:
     directory = Path(__file__).parent
 
     def create_program_report(self, content):

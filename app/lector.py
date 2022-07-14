@@ -1,14 +1,14 @@
 from pathlib import Path
 
 
-class Reader:
-    directory = Path(__file__).parent
+class Lector:
+    directorio = Path(__file__).parent
 
-    def read_as_graph(self, file):
+    def leer_como_grafo(self, archivo):
         i = 0
         graph = []
 
-        filepath = (self.directory / file).resolve()
+        filepath = (self.directorio / archivo).resolve()
         with open(f'{filepath}', 'r') as f:
             for line in f:
                 values = line.split()
@@ -39,11 +39,11 @@ class Reader:
 
         return graph
 
-    def read_as_street_list(self, file):
+    def leer_como_lista_de_calles(self, file):
         i = 0
         streets = []
 
-        filepath = (self.directory / file).resolve()
+        filepath = (self.directorio / file).resolve()
         with open(f'{filepath}', 'r') as f:
             for line in f:
                 values = line.split()
@@ -70,7 +70,7 @@ class Reader:
 
     def read_journeys(self, file):
         i = 0
-        filepath = (self.directory / file).resolve()
+        filepath = (self.directorio / file).resolve()
         with open(f'{filepath}', 'r') as f:
             for line in f:
                 values = line.split()
@@ -86,8 +86,8 @@ class Reader:
 
         return journeys
 
-    def read_simulation_config(self, file):
-        filepath = (self.directory / file).resolve()
+    def leer_configuracion(self, file):
+        filepath = (self.directorio / file).resolve()
 
         with open(f'{filepath}', 'r') as f:
             seconds = int(f.readline())

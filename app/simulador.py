@@ -1,7 +1,7 @@
 import json
 
 
-class Simulator:
+class Simulador:
     index_from = 0
     index_to = 1
     index_street_name = 2
@@ -15,17 +15,15 @@ class Simulator:
         self.streets = streets
         self.journeys = journeys
 
-    def simulate(self, traffic_lights):
-        self.calculate_distances()
-        self.add_green_lights(traffic_lights)
-        print(f'Score de {self.score} por {self.seconds} segundos')
+    def simular(self, traffic_lights):
+        self.calcular_distancias()
+        self.agregar_luces_verdes(traffic_lights)
 
-        # print(f'Trayectos: \n{json.dumps(self.journeys, indent=2)}')
         print(f'Calles: \n{json.dumps(self.streets, indent=2)}')
 
         return None
 
-    def calculate_distances(self):
+    def calcular_distancias(self):
         for journey in self.journeys:
             distance = 0
 
@@ -40,7 +38,7 @@ class Simulator:
 
         return self.journeys
 
-    def add_green_lights(self, traffic_lights):
+    def agregar_luces_verdes(self, traffic_lights):
         for street in self.streets:
             programmed = False
             for street_programmed in traffic_lights:
