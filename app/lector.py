@@ -6,92 +6,92 @@ class Lector:
 
     def leer_como_grafo(self, archivo):
         i = 0
-        graph = []
+        grafo = []
 
-        filepath = (self.directorio / archivo).resolve()
-        with open(f'{filepath}', 'r') as f:
-            for line in f:
-                values = line.split()
+        ruta_archivo = (self.directorio / archivo).resolve()
+        with open(f'{ruta_archivo}', 'r') as f:
+            for linea in f:
+                valores = linea.split()
 
                 # Inicializamos el grafo segun la cantidad de vertices (intersecciones) que se encuentren
                 if i == 0:
-                    intersection_count = int(values[0])
+                    cant_intersecciones = int(valores[0])
 
-                    for j in range(intersection_count):
-                        graph.append([])
+                    for j in range(cant_intersecciones):
+                        grafo.append([])
                 else:
                     # Agregamos una calle que va desde una interseccion hacia otra interseccion, que tiene un nombre
                     # y un tiempo para recorrerla
-                    from_vertice = int(values[0])
-                    to_vertice = int(values[1])
-                    street_name = values[2]
-                    time_to_walk_it = int(values[3])
+                    desde = int(valores[0])
+                    hacia = int(valores[1])
+                    nombre_calle = valores[2]
+                    tiempo_para_recorrer = int(valores[3])
 
-                    adjacency = [to_vertice, time_to_walk_it, street_name]
+                    calle = [hacia, tiempo_para_recorrer, nombre_calle]
 
-                    adjacencies = graph[from_vertice]
-                    adjacencies.append(adjacency)
-                    graph[from_vertice] = adjacencies
+                    calles = grafo[desde]
+                    calles.append(calle)
+                    grafo[desde] = calles
 
                 i = i + 1
 
         f.close()
 
-        return graph
+        return grafo
 
-    def leer_como_lista_de_calles(self, file):
+    def leer_como_lista_de_calles(self, archivo):
         i = 0
-        streets = []
+        calles = []
 
-        filepath = (self.directorio / file).resolve()
-        with open(f'{filepath}', 'r') as f:
-            for line in f:
-                values = line.split()
+        ruta_archivo = (self.directorio / archivo).resolve()
+        with open(f'{ruta_archivo}', 'r') as f:
+            for linea in f:
+                valores = linea.split()
 
                 if i == 0:
-                    streets = [None] * int(values[1])
+                    calles = [None] * int(valores[1])
                 else:
                     # Agregamos una calle que va desde una interseccion hacia otra, que tiene un nombre
                     # y un tiempo para recorrerla
-                    from_intersection = int(values[0])
-                    to_intersection = int(values[1])
-                    street_name = values[2]
-                    time_to_walk_it = int(values[3])
+                    desde = int(valores[0])
+                    hacia = int(valores[1])
+                    nombre_calle = valores[2]
+                    tiempo_para_recorrer = int(valores[3])
 
-                    street = [from_intersection, to_intersection, street_name, time_to_walk_it]
+                    calle = [desde, hacia, nombre_calle, tiempo_para_recorrer]
 
-                    streets[i - 1] = street
+                    calles[i - 1] = calle
 
                 i = i + 1
 
         f.close()
 
-        return streets
+        return calles
 
-    def read_journeys(self, file):
+    def leer_trayectos(self, archivo):
         i = 0
-        filepath = (self.directorio / file).resolve()
-        with open(f'{filepath}', 'r') as f:
-            for line in f:
-                values = line.split()
+        ruta_archivo = (self.directorio / archivo).resolve()
+        with open(f'{ruta_archivo}', 'r') as f:
+            for linea in f:
+                valores = linea.split()
 
                 if i == 0:
                     # Inicializamos la cantidad de trayectos segun la cantidad dada en la primera posicion
-                    journeys = [None] * int(values[0])
+                    trayectos = [None] * int(valores[0])
                 else:
-                    journeys[i - 1] = values
+                    trayectos[i - 1] = valores
 
                 i = i + 1
         f.close()
 
-        return journeys
+        return trayectos
 
-    def leer_configuracion(self, file):
-        filepath = (self.directorio / file).resolve()
+    def leer_configuracion(self, archivo):
+        ruta_archivo = (self.directorio / archivo).resolve()
 
-        with open(f'{filepath}', 'r') as f:
-            seconds = int(f.readline())
-            score = int(f.readline())
+        with open(f'{ruta_archivo}', 'r') as f:
+            segundos = int(f.readline())
+            puntaje = int(f.readline())
             f.close()
 
-        return seconds, score
+        return segundos, puntaje

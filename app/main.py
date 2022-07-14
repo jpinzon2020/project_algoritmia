@@ -13,11 +13,12 @@ if __name__ == '__main__':
 
     # Este es el listado de calles. Orden de las posiciones: desde donde sale, para donde va, nombre de la calle, distancia
     calles = _lector.leer_como_lista_de_calles(r'../data/red.txt')
+    print(f"Calles {calles}")
 
     segundos, puntaje = _lector.leer_configuracion(r'../data/simulacion.txt')
     print(f"Segundos {segundos} y score {puntaje}")
 
-    trayectos = _lector.read_journeys(r'../data/trayectos.txt')
+    trayectos = _lector.leer_trayectos(r'../data/trayectos.txt')
 
     _simulador = Simulador(puntaje, segundos, calles, trayectos)
     trayectos = _simulador.calcular_distancias() # Aca se calculan las distancias en cada trayecto, y se ponen en la ultima posicion del arreglo
