@@ -8,7 +8,7 @@ if __name__ == '__main__':
     _lector = Lector()
     _escritor = Escritor()
 
-    # grafo = _lector.leer_como_grafo(r'../data/red3.txt')
+    grafo = _lector.leer_como_grafo(r'../data/red.txt')
     # print(f"Grafo {grafo}")
 
     # Este es el listado de calles. Orden de las posiciones: desde donde sale, para donde va, nombre de la calle, distancia
@@ -23,7 +23,7 @@ if __name__ == '__main__':
     _simulador = Simulador(puntaje, segundos, calles, trayectos)
     trayectos = _simulador.calcular_distancias() # Aca se calculan las distancias en cada trayecto, y se ponen en la primera posicion del arreglo
 
-    _programacion = Programacion(trayectos, calles)
+    _programacion = Programacion(trayectos, calles, grafo)
     print(f"Encolamiento de vehiculos {_programacion.cola_vehiculos}")
 
     print(f"Trayectos {trayectos}")
