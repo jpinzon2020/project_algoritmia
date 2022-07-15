@@ -29,14 +29,6 @@ if __name__ == '__main__':
     print(f"Trayectos {trayectos}")
 
     programacion = [
-        # [nombre_calle, tiempo en verde, posicion en verde]
-        # La posicion en verde me dice, si dados 5 semaforos que llegan a una interseccion, en que orden se ponen en verde:
-        # de primero, segundo, tercero, cuarto o quinto
-        # Evidentemente si solo hay 2 semaforos, si uno empieza en verde, el otro empieza en rojo
-        # Se propone
-        # [calle1, 10, 2]
-        # que indicaria semaforo al final de la calle1, con 10 segundos en verde, y es el segundo en la interseccion en ponerse en verde
-        # (o el tercero, si la posicion empieza en 0)
         ['calle3', 10],
         ['calle5', 8],
         ['calle1', 12],
