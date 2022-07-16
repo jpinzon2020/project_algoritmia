@@ -1,7 +1,13 @@
 import math
 
+'''
+Simulador inicial, usado para calcular la programacion de los semaforos
+cuando las calles y los trayectos estan definidos como listas o como matrices de adyacencia.
+Tuvo que ser modificado en una version posterior usando objetos, mediante la clase Programador
+'''
 
-class Simulador:
+
+class SimuladorInicial:
     indice_desde = 0
     indice_hacia = 1
     indice_nombre_calle = 2
@@ -9,15 +15,15 @@ class Simulador:
     indice_luz_verde = 4
     indice_luz_roja = 5
 
-    def __init__(self, puntaje, segundos, calles, trayectos):
+    def __init__(self, puntaje: int, segundos: int, calles: list, trayectos: list):
         self.puntaje = puntaje
         self.segundos = segundos
         self.calles = calles
         self.trayectos = trayectos
 
-    def simular(self, traffic_lights):
+    def simular(self, luces_verdes):
         self.calcular_distancias()
-        self.agregar_luces_verdes(traffic_lights)
+        self.agregar_luces_verdes(luces_verdes)
         self.calcular_luces_rojas()
         self.imprimir_estado_inicial()
 
