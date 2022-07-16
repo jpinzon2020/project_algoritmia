@@ -1,5 +1,6 @@
 from pathlib import Path
 from objetos.calle import Calle
+from objetos.interseccion import Interseccion
 from objetos.mapa_vial import MapaVial
 from objetos.trayecto import Trayecto
 
@@ -120,19 +121,21 @@ class Lector:
     '''
     def leer_como_mapa_vial(self, archivo_calles: str, archivo_trayectos: str) -> MapaVial:
 
-        cantidad_intersecciones, cantidad_calles, calles = self.leer_como_objeto_calle(archivo_calles)
+        cantidad_intersecciones, intersecciones, cantidad_calles, calles = self.leer_como_objeto_calle(archivo_calles)
         cantidad_trayectos, trayectos = self.leer_como_objeto_trayecto(archivo_trayectos)
 
         mapa_vial = MapaVial(cantidad_intersecciones=cantidad_intersecciones,
                              cantidad_calles=cantidad_calles,
                              cantidad_trayectos=cantidad_trayectos)
         mapa_vial.agregar_calles(calles)
+        mapa_vial.agregar_intersecciones(intersecciones)
         mapa_vial.agregar_trayectos(trayectos)
         return mapa_vial
 
     def leer_como_objeto_calle(self, ruta_archivo: str):
         i = 0
         calles = []
+        intersecciones = []
 
         with open(f'{ruta_archivo}', 'r') as f:
             for linea in f:
@@ -140,6 +143,8 @@ class Lector:
 
                 if i == 0:
                     cantidad_intersecciones = int(valores[0])
+                    intersecciones = [None] * cantidad_intersecciones
+
                     cantidad_calles = int(valores[1])
                 else:
                     desde = int(valores[0])
@@ -150,11 +155,22 @@ class Lector:
                     # Creamos la calle y la agregamos al listado
                     calle = Calle(nombre=nombre_calle, desde=desde, hacia=hacia, distancia=tiempo_para_recorrer)
                     calles.append(calle)
+
+                    # Ya que una calle C va desde un punto A hacia otro punto B, sabemos que en el punto B hay una calle
+                    # entrante C. Asi, creamos u obtenemos la interseccion, si existe, y agregamos la calle entrante
+                    if intersecciones[hacia]:
+                        interseccion = intersecciones[hacia]
+                    else:
+                        interseccion = Interseccion(interseccion=hacia)
+
+                    interseccion.agregar_calle_entrante(calle=nombre_calle)
+                    intersecciones[hacia] = interseccion
+
                 i = i + 1
 
         f.close()
 
-        return cantidad_intersecciones, cantidad_calles, calles
+        return cantidad_intersecciones, intersecciones, cantidad_calles, calles
 
     def leer_como_objeto_trayecto(self, ruta_archivo: str):
         i = 0
