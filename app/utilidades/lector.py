@@ -12,7 +12,7 @@ class Lector:
 
     '''
     La primera prueba llevo a leer como un grafo el archivo de red.
-    Ello genera una matriz interconectada, que eventualmente se hizo dificil de analizar
+    Ello genera una matriz de adyacencia, que eventualmente se hizo dificil de analizar
     '''
     def leer_como_grafo(self, ruta_archivo: str) -> list:
         i = 0
@@ -121,7 +121,7 @@ class Lector:
     '''
     def leer_como_mapa_vial(self, archivo_calles: str, archivo_trayectos: str) -> MapaVial:
 
-        cantidad_intersecciones, intersecciones, cantidad_calles, calles = self.leer_como_objeto_calle(archivo_calles)
+        cantidad_intersecciones, intersecciones, cantidad_calles, calles = self.leer_como_objetos_calle_interseccion(archivo_calles)
         cantidad_trayectos, trayectos = self.leer_como_objeto_trayecto(archivo_trayectos)
 
         mapa_vial = MapaVial(cantidad_intersecciones=cantidad_intersecciones,
@@ -132,7 +132,7 @@ class Lector:
         mapa_vial.agregar_trayectos(trayectos)
         return mapa_vial
 
-    def leer_como_objeto_calle(self, ruta_archivo: str):
+    def leer_como_objetos_calle_interseccion(self, ruta_archivo: str):
         i = 0
         calles = []
         intersecciones = []
@@ -156,8 +156,10 @@ class Lector:
                     calle = Calle(nombre=nombre_calle, desde=desde, hacia=hacia, distancia=tiempo_para_recorrer)
                     calles.append(calle)
 
-                    # Ya que una calle C va desde un punto A hacia otro punto B, sabemos que en el punto B hay una calle
-                    # entrante C. Asi, creamos u obtenemos la interseccion, si existe, y agregamos la calle entrante
+                    # Ya que una calle C va desde un punto A hacia un punto B, deducimos que en el punto B hay una calle
+                    # entrante C. Asi, podemos crear u obtener la interseccion, si existe, y agregamos la calle entrante.
+                    # Luego, agregamos la interseccion al listado de intersecciones en la posicion del numero de la
+                    # interseccion; es decir, la interseccion 0 se agrega en la posicion 0, por ejemplo
                     if intersecciones[hacia]:
                         interseccion = intersecciones[hacia]
                     else:

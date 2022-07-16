@@ -7,7 +7,7 @@ Tuvo que ser modificado en una version posterior usando objetos, mediante la cla
 '''
 
 
-class SimuladorInicial:
+class Simulador:
     indice_desde = 0
     indice_hacia = 1
     indice_nombre_calle = 2
