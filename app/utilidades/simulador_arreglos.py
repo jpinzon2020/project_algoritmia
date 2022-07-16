@@ -1,13 +1,13 @@
 import math
 
 '''
-Simulador inicial, usado para calcular la programacion de los semaforos
+Simulador de Arreglos, usado para calcular la programacion de los semaforos
 cuando las calles y los trayectos estan definidos como listas o como matrices de adyacencia.
-Tuvo que ser modificado en una version posterior usando objetos, mediante la clase Programador
+Tuvo que ser modificado en una version posterior usando objetos y la clase Programador
 '''
 
 
-class Simulador:
+class SimuladorArreglos:
     indice_desde = 0
     indice_hacia = 1
     indice_nombre_calle = 2
