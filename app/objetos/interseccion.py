@@ -1,3 +1,5 @@
+import math
+
 from objetos.semaforo import Semaforo
 
 
@@ -7,6 +9,11 @@ class Interseccion:
         self._interseccion = interseccion
         self._calles_entrantes = []
         self._semaforos = []
+
+        # Los ciclos de cambio indican cuantos segundos transcurren luego de que un semaforo se ponga en rojo
+        # para que se vuelva a poner en verde. Si una interseccion no ha sido programada, nunca cambiara a verde,
+        # y por tanto, su ciclo es infinito
+        self._ciclo_de_cambio = 0
 
     def agregar_semaforo(self, semaforo: Semaforo):
         self._semaforos.append(semaforo)
@@ -63,3 +70,11 @@ class Interseccion:
     @property
     def semaforos(self) -> list[Semaforo]:
         return self._semaforos
+
+    @property
+    def ciclo_de_cambio(self) -> int:
+        return self._ciclo_de_cambio
+
+    @ciclo_de_cambio.setter
+    def ciclo_de_cambio(self, ciclo: int):
+        self._ciclo_de_cambio = ciclo

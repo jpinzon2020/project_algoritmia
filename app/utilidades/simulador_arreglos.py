@@ -56,8 +56,8 @@ class SimuladorArreglos:
                         tiempo = aux[self.indice_luz_verde]
                         calle[self.indice_luz_roja] = calle[self.indice_luz_roja] + tiempo
 
-                j = j + 1
-            i = i + 1
+                j += 1
+            i += 1
 
     def calcular_distancias(self):
         for trayecto in self.trayectos:
@@ -69,7 +69,7 @@ class SimuladorArreglos:
                     if trayecto[i] == calle[self.indice_nombre_calle]:
                         distancia = distancia + calle[self.indice_distancia]
 
-                i = i + 1
+                i += 1
             trayecto.insert(0, distancia)
 
         return self.trayectos

@@ -2,7 +2,7 @@ from pathlib import Path
 from objetos.calle import Calle
 from objetos.interseccion import Interseccion
 from objetos.mapa_vial import MapaVial
-from objetos.trayecto import Trayecto
+from objetos.vehiculo import Vehiculo
 
 
 class Lector:
@@ -78,7 +78,7 @@ class Lector:
 
                     calles[i - 1] = calle
 
-                i = i + 1
+                i += 1
 
         f.close()
 
@@ -104,7 +104,7 @@ class Lector:
                 else:
                     trayectos[i - 1] = valores
 
-                i = i + 1
+                i += 1
         f.close()
 
         return trayectos
@@ -120,19 +120,20 @@ class Lector:
     relacionados que generan un mapa vial 
     '''
     def leer_como_mapa_vial(self, archivo_calles: str, archivo_trayectos: str) -> MapaVial:
-
+        print('Iniciando lectura como Mapa Vial')
         cantidad_intersecciones, intersecciones, cantidad_calles, calles = self.leer_como_objetos_calle_interseccion(archivo_calles)
-        cantidad_trayectos, trayectos = self.leer_como_objeto_trayecto(archivo_trayectos)
+        cantidad_vehiculos, vehiculos = self.leer_como_objeto_vehiculo_con_trayecto(archivo_trayectos)
 
         mapa_vial = MapaVial(cantidad_intersecciones=cantidad_intersecciones,
                              cantidad_calles=cantidad_calles,
-                             cantidad_trayectos=cantidad_trayectos)
+                             cantidad_vehiculos=cantidad_vehiculos)
         mapa_vial.agregar_calles(calles)
         mapa_vial.agregar_intersecciones(intersecciones)
-        mapa_vial.agregar_trayectos(trayectos)
+        mapa_vial.agregar_vehiculos(vehiculos)
         return mapa_vial
 
     def leer_como_objetos_calle_interseccion(self, ruta_archivo: str):
+        print(f'Iniciando lectura de Calles e Intersecciones en {ruta_archivo}')
         i = 0
         calles = []
         intersecciones = []
@@ -168,42 +169,45 @@ class Lector:
                     interseccion.agregar_calle_entrante(calle=nombre_calle)
                     intersecciones[hacia] = interseccion
 
-                i = i + 1
+                i += 1
 
         f.close()
 
         return cantidad_intersecciones, intersecciones, cantidad_calles, calles
 
-    def leer_como_objeto_trayecto(self, ruta_archivo: str):
+    def leer_como_objeto_vehiculo_con_trayecto(self, ruta_archivo: str):
+        print(f'Iniciando lectura de Vehiculos y Trayectos en {ruta_archivo}')
         i = 0
-        trayectos = []
+        vehiculos = []
 
         with open(f'{ruta_archivo}', 'r') as f:
             for linea in f:
                 valores = linea.split()
 
                 if i == 0:
-                    cantidad_trayectos = int(valores[0])
+                    cantidad_vehiculos = int(valores[0])
                 else:
-                    trayecto = Trayecto(cantidad_calles=int(valores[0]))
 
-                    j = 1
+                    j = 0
                     while j < len(valores):
-                        # Agregamos las calles que pertenecen al trayecto
-                        trayecto.agregar_calle(valores[j])
-                        j = j + 1
+                        if j == 0:
+                            vehiculo = Vehiculo(identificador=i - 1, cantidad_calles=valores[j])
+                        else:
+                            vehiculo.agregar_calle_a_trayecto(valores[j])
+                        j += 1
+                    vehiculos.append(vehiculo)
 
-                    trayectos.append(trayecto)
-                i = i + 1
+                i += 1
         f.close()
 
-        return cantidad_trayectos, trayectos
+        return cantidad_vehiculos, vehiculos
 
 # endregion
 
 # region LECTURA DEL ARCHIVO DE SIMULACION
 
     def leer_configuracion(self, ruta_archivo: str):
+        print(f'Leyendo configuracion en {ruta_archivo}')
         with open(f'{ruta_archivo}', 'r') as f:
             segundos = int(f.readline())
             puntaje = int(f.readline())

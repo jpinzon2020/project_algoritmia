@@ -1,17 +1,17 @@
 from objetos.calle import Calle
 from objetos.interseccion import Interseccion
-from objetos.trayecto import Trayecto
+from objetos.vehiculo import Vehiculo
 
 
 class MapaVial:
 
-    def __init__(self, cantidad_intersecciones: int, cantidad_calles: int, cantidad_trayectos: int):
+    def __init__(self, cantidad_intersecciones: int, cantidad_calles: int, cantidad_vehiculos: int):
         self._cantidad_intersecciones = cantidad_intersecciones
         self._intersecciones = []
         self._cantidad_calles = cantidad_calles
         self._calles = []
-        self._cantidad_trayectos = cantidad_trayectos
-        self._trayectos = []
+        self._cantidad_vehiculos = cantidad_vehiculos
+        self._vehiculos = []
 
     def agregar_calles(self, calles: list[Calle]):
         self._calles = calles
@@ -19,8 +19,16 @@ class MapaVial:
     def agregar_intersecciones(self, intersecciones: list[Interseccion]):
         self._intersecciones = intersecciones
 
-    def agregar_trayectos(self, trayectos: list[Trayecto]):
-        self._trayectos = trayectos
+    def agregar_vehiculos(self, vehiculos: list[Vehiculo]):
+        self._vehiculos = vehiculos
+
+    '''
+    Retorna la distancia en tiempo para recorrer una calle
+    '''
+    @staticmethod
+    def distancia_de(self, nombre_calle: str) -> int:
+        calle = next(x for x in self._calles if x.nombre == nombre_calle)
+        return calle.distancia
 
     @property
     def cantidad_intersecciones(self):
@@ -31,8 +39,8 @@ class MapaVial:
         return self._cantidad_calles
 
     @property
-    def cantidad_trayectos(self):
-        return self._cantidad_trayectos
+    def cantidad_vehiculos(self):
+        return self._cantidad_vehiculos
 
     @property
     def intersecciones(self):
@@ -47,7 +55,7 @@ class MapaVial:
         return None
 
     @property
-    def trayectos(self):
-        if self._trayectos:
-            return self._trayectos
+    def vehiculos(self):
+        if self._vehiculos:
+            return self._vehiculos
         return None
