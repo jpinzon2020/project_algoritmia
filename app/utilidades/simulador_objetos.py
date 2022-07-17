@@ -22,11 +22,11 @@ class SimuladorObjetos:
 
         vehiculos = self.mapa_vial.vehiculos
         self.puntaje = self.segundos * len(vehiculos)
-        print(f'Puntaje : {self.puntaje}')
+        print(f'Puntaje inicial: {self.puntaje}')
 
         # Hacemos la simulacion con cada segundo que transcurre
         segundo_actual = 0
-        while segundo_actual < self.segundos:
+        while segundo_actual <= self.segundos:
             print(f'Segundo : {segundo_actual}')
 
             for vehiculo in vehiculos:
@@ -130,7 +130,6 @@ class SimuladorObjetos:
                 # Si, al evaluar en la formula F1 obtenemos que el segundo actual esta en el rango [si - sj],
                 # donde sj = si + v, con v tiempo en verde, podemos afirmar que el vehiculo tiene en verde dicho semaforo
                 # en el segundo T.
-                print(f'segundo {segundo_actual}, ciclo {ciclo}')
                 iteracion = segundo_actual // ciclo
 
                 tiempo_iteracion = primer_segundo_verde_del_semaforo + (ciclo * iteracion)

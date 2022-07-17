@@ -122,6 +122,7 @@ class Lector:
     def leer_como_mapa_vial(self, archivo_calles: str, archivo_trayectos: str) -> MapaVial:
         print('Iniciando lectura como Mapa Vial')
         cantidad_intersecciones, intersecciones, cantidad_calles, calles = self.leer_como_objetos_calle_interseccion(archivo_calles)
+        calles.sort(key=self.ordenar_por_nombre_calle)
         cantidad_vehiculos, vehiculos = self.leer_como_objeto_vehiculo_con_trayecto(archivo_trayectos)
 
         mapa_vial = MapaVial(cantidad_intersecciones=cantidad_intersecciones,
@@ -131,6 +132,10 @@ class Lector:
         mapa_vial.agregar_intersecciones(intersecciones)
         mapa_vial.agregar_vehiculos(vehiculos)
         return mapa_vial
+
+    @staticmethod
+    def ordenar_por_nombre_calle(calle):
+        return calle.nombre
 
     def leer_como_objetos_calle_interseccion(self, ruta_archivo: str):
         print(f'Iniciando lectura de Calles e Intersecciones en {ruta_archivo}')
