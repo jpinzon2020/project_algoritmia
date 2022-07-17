@@ -151,6 +151,6 @@ class SimuladorObjetos:
         if not vehiculo.sigue_en_transito():
             self.remover_vehiculo(nombre_calle=vehiculo.calle_actual, identificador_vehiculo=vehiculo.identificador)
             self.puntaje = self.puntaje + (self.segundos - segundo_actual)
-            print(f'Puntaje : {self.puntaje}')
+            print(f'Vehiculo {vehiculo.identificador} termina trayecto. Puntaje acumulado: {self.puntaje}')
             return True
         return False
