@@ -61,7 +61,8 @@ class SimuladorObjetos:
                 tiempo_para_iniciar_en_verde = tiempo_para_iniciar_en_verde + semaforo.duracion_luz_verde
                 posicion += 1
 
-            interseccion.ciclo_de_cambio = ciclo
+            if ciclo != 0:
+                interseccion.ciclo_de_cambio = ciclo
 
     def inicializar_calles(self):
         print('Inicializando calles')
@@ -129,8 +130,9 @@ class SimuladorObjetos:
                 # Si, al evaluar en la formula F1 obtenemos que el segundo actual esta en el rango [si - sj],
                 # donde sj = si + v, con v tiempo en verde, podemos afirmar que el vehiculo tiene en verde dicho semaforo
                 # en el segundo T.
-
+                print(f'segundo {segundo_actual}, ciclo {ciclo}')
                 iteracion = segundo_actual // ciclo
+
                 tiempo_iteracion = primer_segundo_verde_del_semaforo + (ciclo * iteracion)
                 tiempo_maximo_iteracion = tiempo_iteracion + tiempo_en_verde
 

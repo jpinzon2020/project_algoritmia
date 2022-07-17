@@ -13,7 +13,7 @@ class Interseccion:
         # Los ciclos de cambio indican cuantos segundos transcurren luego de que un semaforo se ponga en rojo
         # para que se vuelva a poner en verde. Si una interseccion no ha sido programada, nunca cambiara a verde,
         # y por tanto, su ciclo es infinito
-        self._ciclo_de_cambio = 0
+        self._ciclo_de_cambio = math.inf
 
     def agregar_semaforo(self, semaforo: Semaforo):
         self._semaforos.append(semaforo)
