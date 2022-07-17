@@ -47,9 +47,9 @@ def imprimir_programacion(intersecciones: list):
 
 
 if __name__ == '__main__':
-    archivo_red = str((_directorio / r'../data/red3.txt').resolve())
-    archivo_trayectos = str((_directorio / r'../data/trayectos3.txt').resolve())
-    archivo_simulacion = str((_directorio / r'../data/simulacion_3.txt').resolve())
+    archivo_red = str((_directorio / r'../data/red.txt').resolve())
+    archivo_trayectos = str((_directorio / r'../data/trayectos.txt').resolve())
+    archivo_simulacion = str((_directorio / r'../data/simulacion.txt').resolve())
     archivo_reporte = str((_directorio / r'../data/programacion1.txt').resolve())
 
     segundos, puntaje = _lector.leer_configuracion(archivo_simulacion)

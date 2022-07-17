@@ -22,12 +22,14 @@ class SimuladorObjetos:
 
         vehiculos = self.mapa_vial.vehiculos
         self.puntaje = self.segundos * len(vehiculos)
+        print(f'Puntaje : {self.puntaje}')
 
         # Hacemos la simulacion con cada segundo que transcurre
         segundo_actual = 0
         while segundo_actual < self.segundos:
-            for vehiculo in vehiculos:
+            print(f'Segundo : {segundo_actual}')
 
+            for vehiculo in vehiculos:
                 if vehiculo.sigue_en_transito():
                     if vehiculo.tiempo_restante == 0:
                         self.evaluar_si_cruza_interseccion(vehiculo, segundo_actual)
@@ -36,6 +38,7 @@ class SimuladorObjetos:
                         self.evaluar_si_termina_recorrido(vehiculo, segundo_actual)
 
             segundo_actual += 1
+
         return self.puntaje
 
     def inicializar_semaforos(self):
@@ -85,11 +88,12 @@ class SimuladorObjetos:
         # Evaluar si no existen otros vehiculos en la calle antes que el actual
         if calle.primer_vehiculo() == vehiculo.identificador:
             interseccion = calle.hacia
+            interseccion_programada = next(i for i in self._intersecciones_programadas if interseccion == i.interseccion)
 
-            if interseccion in self._intersecciones_programadas:
-                ciclo = interseccion.ciclo_de_cambio
+            if interseccion_programada:
+                ciclo = interseccion_programada.ciclo_de_cambio
 
-                semaforo = next(s for s in interseccion.semaforos if s.calle == nombre_calle_actual)
+                semaforo = next(s for s in interseccion_programada.semaforos if s.calle == nombre_calle_actual)
                 tiempo_en_verde = semaforo.duracion_luz_verde
                 primer_segundo_verde_del_semaforo = semaforo.primer_segundo_en_verde
 
@@ -132,9 +136,11 @@ class SimuladorObjetos:
 
                 # El segundo actual debe estar en el rango de la iteracion, y por tanto el vehiculo puede avanzar
                 if tiempo_iteracion <= segundo_actual < tiempo_maximo_iteracion:
-                    self.remover_primer_vehiculo(vehiculo.calle_actual())
+                    self.remover_primer_vehiculo(vehiculo.calle_actual)
                     vehiculo.avanzar()
-                    self.enfilar_vehiculo(vehiculo.calle_actual())
+                    if not self.evaluar_si_termina_recorrido(vehiculo, segundo_actual):
+                        vehiculo.tiempo_restante = calle.distancia
+                        self.enfilar_vehiculo(nombre_calle=vehiculo.calle_actual, identificador_vehiculo=vehiculo.identificador)
 
     '''
     Evalua si el vehiculo termina el recorrido en el segundo actual, y agrega el puntaje correspondiente
@@ -143,5 +149,8 @@ class SimuladorObjetos:
         # Si el vehiculo no sigue en transito, ha terminado su recorrido. Por tanto, se elimina de la calle en que se
         # encuentra y se puede agregar el puntaje
         if not vehiculo.sigue_en_transito():
-            self.remover_vehiculo(vehiculo.identificador)
+            self.remover_vehiculo(nombre_calle=vehiculo.calle_actual, identificador_vehiculo=vehiculo.identificador)
             self.puntaje = self.puntaje + (self.segundos - segundo_actual)
+            print(f'Puntaje : {self.puntaje}')
+            return True
+        return False

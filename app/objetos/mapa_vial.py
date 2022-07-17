@@ -31,15 +31,15 @@ class MapaVial:
         return calle.distancia
 
     @property
-    def cantidad_intersecciones(self):
+    def cantidad_intersecciones(self) -> int:
         return self._cantidad_intersecciones
 
     @property
-    def cantidad_calles(self):
+    def cantidad_calles(self) -> int:
         return self._cantidad_calles
 
     @property
-    def cantidad_vehiculos(self):
+    def cantidad_vehiculos(self) -> int:
         return self._cantidad_vehiculos
 
     @property

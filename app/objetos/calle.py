@@ -16,8 +16,12 @@ class Calle:
     def primer_vehiculo(self):
         return self._cola_de_vehiculos[0]
 
+    # Remueve un vehiculo de la calle, si se encuentra en ella
     def remover_vehiculo(self, identificador_vehiculo: int):
-        self._cola_de_vehiculos.remove(identificador_vehiculo)
+        try:
+            self._cola_de_vehiculos.remove(identificador_vehiculo)
+        except ValueError as e:
+            pass
 
     @property
     def nombre(self):

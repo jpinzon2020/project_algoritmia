@@ -54,11 +54,11 @@ class Vehiculo:
 
     @property
     def calle_actual(self) -> str:
-        return self._trayecto[self._viaja_por_calle]
+        if self._viaja_por_calle >= self._cantidad_calles:
+            # Retornar la ultima calle del trayecto
+            return self._trayecto[self._cantidad_calles - 1]
 
-    @property
-    def cantidad_calles(self) -> int:
-        return self._cantidad_calles
+        return self._trayecto[self._viaja_por_calle]
 
     @property
     def cantidad_calles(self) -> int:

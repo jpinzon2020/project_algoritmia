@@ -191,7 +191,7 @@ class Lector:
                     j = 0
                     while j < len(valores):
                         if j == 0:
-                            vehiculo = Vehiculo(identificador=i - 1, cantidad_calles=valores[j])
+                            vehiculo = Vehiculo(identificador=i - 1, cantidad_calles=int(valores[j]))
                         else:
                             vehiculo.agregar_calle_a_trayecto(valores[j])
                         j += 1
