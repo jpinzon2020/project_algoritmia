@@ -51,13 +51,13 @@ class Programacion:
         
         indice_vehiculo = 0
         for calle in self.trayectos:
-                
-            if calle[2:][0] not in self.cola_vehiculos:
+            
+            if calle[1:][0] not in self.cola_vehiculos:
                 vehiculos = []
                 vehiculos.append(indice_vehiculo)
-                self.cola_vehiculos[calle[2:][0]] = vehiculos
+                self.cola_vehiculos[calle[1:][0]] = vehiculos
             else:
-                self.cola_vehiculos[calle[2:][0]].append(indice_vehiculo)
+                self.cola_vehiculos[calle[1:][0]].append(indice_vehiculo)
             indice_vehiculo += 1
             #duracion_calle = self.encontrar_duracion_calle(calle[2:][0])    
         
@@ -95,8 +95,8 @@ class Programacion:
         
         for calle_actual in self.calles:
             if calle_buscada == calle_actual[2]:
-                #vertices_llega = self.vertices_llegan.count(calle_actual[0])
-                return calle_actual[3], self.bfs_editado(calle_actual[1]), calle_actual[1], 0     
+                vertices_llega = self.vertices_llegan.count(calle_actual[0])
+                return calle_actual[3], self.bfs_editado(calle_actual[1]), calle_actual[1], vertices_llega
 
         
     
