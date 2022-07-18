@@ -55,6 +55,10 @@ if __name__ == '__main__':
     segundos, puntaje = _lector.leer_configuracion(archivo_simulacion)
     # print(f"SEGUNDOS {segundos}\nPUNTAJE {puntaje}")
 
+    # Memoria generada como parte del proceso de optimizacion. Inicialmente, cuenta con un listado de calles y sus atributos
+    # TO-DO: Optimizar proceso de lectura
+    memoria = _lector.leer_como_mapa_de_calles(archivo_red)
+
     # Generamos el mapa vial, e imprimimos las calles, intersecciones y vehiculos generados de los archivos
     # para verificar que la lectura sea correcta
     mapa = _lector.leer_como_mapa_vial(archivo_calles=archivo_red,
@@ -65,7 +69,6 @@ if __name__ == '__main__':
     intersecciones_programadas = _programador.programar_semaforos_por_tiempo_inicial(mapa_vial=mapa)
     # imprimir_programacion(intersecciones_programadas)
 
-    memoria = _lector.leer_como_mapa_de_calles(archivo_red)
     simulador = SimuladorObjetos(mapa_vial=mapa, puntaje=puntaje, segundos=segundos, memoria=memoria)
 
     # Ejecutamos la simulacion con la programacion generada, la cual nos otorga un puntaje final
