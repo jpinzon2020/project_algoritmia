@@ -73,4 +73,3 @@ if __name__ == '__main__':
     print(f'PUNTAJE FINAL: {puntaje_final}')
 
     _escritor.crear_reporte_desde_intersecciones(ruta_archivo=archivo_reporte, intersecciones=intersecciones_programadas)
-
