@@ -84,6 +84,41 @@ class Lector:
 
         return calles
 
+    '''
+    En una instancia posterior leimos las calles como mapas cuyas claves son el nombre de la misma, y contienen los
+    atributos que indican desde donde y hacia donde se dirige, cual es su distancia en segundos, y una cola de vehiculos
+    asociada
+    '''
+    @staticmethod
+    def leer_como_mapa_de_calles(ruta_archivo: str) -> dict:
+        i = 0
+        calles = {}
+
+        with open(f'{ruta_archivo}', 'r') as f:
+            for linea in f:
+                valores = linea.split()
+
+                if i == 0:
+                    calles = {}
+                else:
+                    # Agregamos una calle que va desde una interseccion hacia otra, que tiene un nombre y un tiempo
+                    # para recorrerla. Ademas inicializamos los tiempos asignados a las luces de los semaforos
+                    nombre_calle = valores[2]
+                    mapa = {
+                        'desde': int(valores[0]),
+                        'hacia': int(valores[1]),
+                        'distancia': int(valores[3]),
+                        'cola_de_vehiculos': []
+                    }
+
+                    calles[nombre_calle] = mapa
+
+                i += 1
+
+        f.close()
+
+        return calles
+
 # endregion
 
 # region LECTURA ARCHIVO DE TRAYECTOS

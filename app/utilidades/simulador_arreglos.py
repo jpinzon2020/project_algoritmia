@@ -3,7 +3,7 @@ import math
 '''
 Simulador de Arreglos, usado para calcular la programacion de los semaforos
 cuando las calles y los trayectos estan definidos como listas o como matrices de adyacencia.
-Tuvo que ser modificado en una version posterior usando objetos y la clase Programador
+Se planteo una segunda alternativa usando objetos y la clase Programador
 '''
 
 

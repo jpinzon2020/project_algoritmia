@@ -65,7 +65,8 @@ if __name__ == '__main__':
     intersecciones_programadas = _programador.programar_semaforos_por_tiempo_inicial(mapa_vial=mapa)
     # imprimir_programacion(intersecciones_programadas)
 
-    simulador = SimuladorObjetos(mapa_vial=mapa, puntaje=puntaje, segundos=segundos)
+    memoria = _lector.leer_como_mapa_de_calles(archivo_red)
+    simulador = SimuladorObjetos(mapa_vial=mapa, puntaje=puntaje, segundos=segundos, memoria=memoria)
 
     # Ejecutamos la simulacion con la programacion generada, la cual nos otorga un puntaje final
     puntaje_final = simulador.simular(intersecciones_programadas)

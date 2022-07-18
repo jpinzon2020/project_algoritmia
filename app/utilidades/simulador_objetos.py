@@ -4,14 +4,24 @@ from objetos.mapa_vial import MapaVial
 from objetos.semaforo import Semaforo
 from objetos.vehiculo import Vehiculo
 
+'''
+Simulador de Objetos, usado para calcular la programacion de los semaforos
+cuando las calles y los trayectos estan definidos como objetos. Calcula correctamente los puntajes, pero requiere optimizacion
+'''
+
 
 class SimuladorObjetos:
     _intersecciones_programadas = []
 
-    def __init__(self, puntaje: int, segundos: int, mapa_vial: MapaVial):
+    def __init__(self, puntaje: int, segundos: int, mapa_vial: MapaVial, memoria: list[dict]):
         self.puntaje = puntaje
         self.segundos = segundos
         self.mapa_vial = mapa_vial
+
+        # Memoria para optimizar consultas. Se encuentra en version inicial, y consiste en un mapa llave - valor
+        # tal que la llave es el nombre de la calle, y los valores son su interseccion inicial y final, la distancia, y
+        # una cola de vehiculos que estan en ella
+        self.memoria = memoria
 
     def simular(self, intersecciones_programadas: list[Interseccion]) -> int:
         self._intersecciones_programadas = intersecciones_programadas
@@ -40,6 +50,7 @@ class SimuladorObjetos:
             segundo_actual += 1
 
         return self.puntaje
+
 
     def inicializar_semaforos(self):
         print('Inicializando semaforos')
@@ -71,24 +82,31 @@ class SimuladorObjetos:
             self.enfilar_vehiculo(nombre_calle=primera_calle, identificador_vehiculo=vehiculo.identificador)
 
     def enfilar_vehiculo(self, nombre_calle: str, identificador_vehiculo: int):
-        calle = next(x for x in self.mapa_vial.calles if x.nombre == nombre_calle)
-        calle.agregar_vehiculo(identificador_vehiculo)
+        calle = self.memoria.get(nombre_calle)
+        calle['cola_de_vehiculos'].append(identificador_vehiculo)
 
     def remover_primer_vehiculo(self, nombre_calle: str):
-        calle = next(x for x in self.mapa_vial.calles if x.nombre == nombre_calle)
-        calle.liberar_vehiculo()
+        calle = self.memoria.get(nombre_calle)
+        calle['cola_de_vehiculos'].pop(0)
 
     def remover_vehiculo(self, nombre_calle: str, identificador_vehiculo: int):
-        calle = next(x for x in self.mapa_vial.calles if x.nombre == nombre_calle)
-        calle.remover_vehiculo(identificador_vehiculo=identificador_vehiculo)
+        calle = self.memoria.get(nombre_calle)
+        try:
+            # Si el vehiculo existe en la calle, lo remueve
+            # Existen casos, para los que un vehiculo solamente cruza una interseccion y termina el recorrido
+            # (casos en que el trayecto especificado es de una sola calle), y en tal caso, el vehiculo no existe en la
+            # calle en que inicia
+            calle['cola_de_vehiculos'].remove(identificador_vehiculo)
+        except ValueError as e:
+            pass
 
     def evaluar_si_cruza_interseccion(self, vehiculo: Vehiculo, segundo_actual: int):
         nombre_calle_actual = vehiculo.calle_actual
-        calle = next(x for x in self.mapa_vial.calles if x.nombre == nombre_calle_actual)
+        calle = self.memoria.get(nombre_calle_actual)
 
         # Evaluar si no existen otros vehiculos en la calle antes que el actual
-        if calle.primer_vehiculo() == vehiculo.identificador:
-            interseccion = calle.hacia
+        if calle['cola_de_vehiculos'][0] == vehiculo.identificador:
+            interseccion = calle['hacia']
             interseccion_programada = next(i for i in self._intersecciones_programadas if interseccion == i.interseccion)
 
             if interseccion_programada:
@@ -140,7 +158,7 @@ class SimuladorObjetos:
                     self.remover_primer_vehiculo(vehiculo.calle_actual)
                     vehiculo.avanzar()
                     if not self.evaluar_si_termina_recorrido(vehiculo, segundo_actual):
-                        vehiculo.tiempo_restante = calle.distancia
+                        vehiculo.tiempo_restante = calle['distancia']
                         self.enfilar_vehiculo(nombre_calle=vehiculo.calle_actual, identificador_vehiculo=vehiculo.identificador)
 
     '''
