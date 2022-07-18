@@ -14,3 +14,6 @@ Dannia Isabel Loaiza <br/>
 <br/>
 Todos los derechos reservados.<br/>
 Cualquier tipo de copia o divulgacion no autorizada por todos los miembros tendra consecuencias legales
+
+<br/> <br/>
+Ejecutar mediante archivo main.py, en carpeta app.
